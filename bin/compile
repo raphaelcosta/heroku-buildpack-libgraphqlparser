@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+# bin/compile <build-dir> <cache-dir>
+
+# $1 = build_dir (location of the app)
+# $2 = cache_dir
+# $3 = env_dir (contains a file for each of the app's config variables)
+
+mkdir -p $2
+
+if [ -f $2/.installed ]; then
+  echo "-----> Skipping installation of libgraphqlparser (looks like it's already installed)"
+  exit 0
+fi
+
+# Download cmake and libgraphqlparser
+wget https://s3.amazonaws.com/mergeguard/cmake.tar.gz &
+wget https://github.com/graphql/libgraphqlparser/archive/v0.4.1.tar.gz &
+wait
+
+# Install cmake
+mkdir -p $2/cmake
+mv cmake.tar.gz $2/cmake.tar.gz
+cd $2/cmake
+tar -xvzf cmake.tar.gz
+
+# Add cmake to the path
+PATH=$PATH:$2/cmake/bin
+
+cd $2
+
+# Install libgraphqlparser
+mkdir -p $2/libgraphqlparser
+mv v0.4.1.tar.gz $2/libgraphqlparser
+cd $2/libgraphqlparser
+tar -xvzf v0.4.1.tar.gz
+cd libgraphqlparser-0.4.1
+cmake . && make && make install
+
+# Clean up
+rm -rf $2/cmake
+rm -rf $2/libgraphqlparser
+
+touch $2/.installed
+
+exit 0
