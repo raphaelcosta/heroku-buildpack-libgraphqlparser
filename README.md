@@ -39,4 +39,9 @@ BUNDLE_BUILD__GRAPHQL-LIBGRAPHQLPARSER: "--with-graphql-include=/app/libgraphqlp
   --with-graphql-lib=/app/libgraphqlparser/lib"
 ```
 
+Finally, at runtime, Ruby needs to know to look for the binaries in a non-standard location. To do that, set the `LD_LIBRARY_PATH` environment variable to something like this:
+```
+/app/.heroku/vendor/lib:/app/libgraphqlparser/lib
+```
+
 That should be all you need!
