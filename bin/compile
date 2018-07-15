@@ -31,6 +31,7 @@ echo "Adding libgraphqlparser to LD_LIBRARY_PATH..."
 export LD_LIBRARY_PATH="$1/libgraphqlparser/lib:$LD_LIBRARY_PATH"
 echo "$LD_LIBRARY_PATH"
 
-export BUNDLELIBGRAPHQLPARSER_BUILD__GRAPHQL-="--with-graphql-include=$1/libgraphqlparser/include --with-graphql-lib=$1/libgraphqlparser/lib"
+export BUNDLE_BUILD__GRAPHQL-LIBGRAPHQLPARSER="--with-graphql-include=$1/libgraphqlparser/include --with-graphql-lib=$1/libgraphqlparser/lib"
+echo "$BUNDLE_BUILD__GRAPHQL-LIBGRAPHQLPARSER"
 
 exit 0
